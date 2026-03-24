@@ -18,6 +18,13 @@ public class AtmServiceTests
     Assert.True(AtmService.HasCardInserted);
   }
   [Fact]
+  public void EjectCard_Test()
+  {
+    AtmService.InsertCard(card);
+    AtmService.EjectCard();
+    Assert.False(AtmService.HasCardInserted);
+  }
+  [Fact]
   public void EnterPin_Wrong()
   {
     AtmService.InsertCard(card);
@@ -30,10 +37,32 @@ public class AtmServiceTests
     Assert.True(AtmService.EnterPin("0123"));
   }
   [Fact]
-  public void Withdraw_Right()
+  public void Withdraw5000_Right()
   {
     AtmService.InsertCard(card);
     AtmService.EnterPin("0123");
     Assert.True(AtmService.Withdraw(5000));
+  }
+  [Fact]
+  public void Withdraw7000_Wrong()
+  {
+    AtmService.InsertCard(card);
+    AtmService.EnterPin("0123");
+    Assert.True(AtmService.Withdraw(5000));
+    AtmService.EjectCard();
+    AtmService.InsertCard(card);
+    AtmService.EnterPin("0123");
+    Assert.False(AtmService.Withdraw(7000));
+  }
+  [Fact]
+  public void Withdraw6000_Wrong()
+  {
+    AtmService.InsertCard(card);
+    AtmService.EnterPin("0123");
+    Assert.True(AtmService.Withdraw(5000));
+    AtmService.EjectCard();
+    AtmService.InsertCard(card);
+    AtmService.EnterPin("0123");
+    Assert.False(AtmService.Withdraw(6000));
   }
 }
