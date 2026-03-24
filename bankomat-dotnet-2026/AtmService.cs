@@ -2,7 +2,7 @@ namespace ATM;
 
 public class AtmService
 {
-    private Card? _currentCard;
+    public Card? _currentCard;
     private bool _isAuthenticated;
 
     public bool HasCardInserted => _currentCard != null;
@@ -58,6 +58,7 @@ public class AtmService
     public bool Deposit(int amount)
     {
         EnsureAuthenticated();
+        AtmBalance += amount;
         return _currentCard!.Account.Deposit(amount);
     }
 

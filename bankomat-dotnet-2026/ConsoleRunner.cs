@@ -23,9 +23,9 @@ public static class ConsoleRunner
                 ShowMainMenu(atm);
             }
         }
-        
+
         Console.WriteLine("Tack och hej!");
-        
+
     }
 
     private static bool ShowWelcomeMenu(AtmService atm, Card demoCard)
@@ -44,7 +44,6 @@ public static class ConsoleRunner
                 atm.InsertCard(demoCard);
                 Console.WriteLine("Kort inmatat.");
                 return true;
-
             case "0":
                 return false;
 
@@ -82,6 +81,7 @@ public static class ConsoleRunner
         Console.WriteLine("2. Ta ut pengar");
         Console.WriteLine("3. Sätt in pengar");
         Console.WriteLine("4. Mata ut kort");
+        Console.WriteLine("5. Kolla bankomatens balans");
         Console.Write("Val: ");
 
         string? input = Console.ReadLine();
@@ -101,6 +101,14 @@ public static class ConsoleRunner
                 atm.EjectCard();
                 Console.WriteLine("Kortet är utmatat.");
                 break;
+            case "5":
+                if (atm._currentCard!.isAdmin)
+                {
+                    Console.WriteLine(atm.AtmBalance);
+                    Console.ReadKey(true);
+                }
+                else { Console.WriteLine("Du är inte admin lol"); Console.ReadKey(true); }
+                break;
             default:
                 Console.WriteLine("Ogiltigt val.");
                 break;
@@ -119,7 +127,7 @@ public static class ConsoleRunner
         string? input = Console.ReadLine();
 
         int amount = int.Parse(input);
-        
+
         bool success = atm.Withdraw(amount);
 
         if (success)
@@ -131,7 +139,7 @@ public static class ConsoleRunner
             Console.WriteLine("Uttaget kunde inte genomföras.");
         }
     }
-    
+
     private static void DepositFlow(AtmService atm)
     {
         Console.Write("Ange belopp att sätta in: ");
@@ -149,7 +157,7 @@ public static class ConsoleRunner
         {
             Console.WriteLine("Insättningen kunde inte genomföras.");
         }
-        
+
     }
-    
+
 }
