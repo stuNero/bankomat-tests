@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "zWFbzB7N0Xo=",
+  "dgSpecHash": "/uBzU+sFaSU=",
   "success": true,
-  "projectFilePath": "C:\\Users\\maxve\\repos\\bankomat-tests\\ATM.Tests\\ATM.Tests.csproj",
+  "projectFilePath": "C:\\Users\\maxve\\repos\\nbi-handelsakademin\\bankomat-tests\\ATM.Tests\\ATM.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\maxve\\.nuget\\packages\\coverlet.collector\\6.0.4\\coverlet.collector.6.0.4.nupkg.sha512",
     "C:\\Users\\maxve\\.nuget\\packages\\microsoft.codecoverage\\17.14.1\\microsoft.codecoverage.17.14.1.nupkg.sha512",
