@@ -2,7 +2,7 @@ namespace ATM;
 
 public class AtmService
 {
-    public Card? _currentCard;
+    private Card? _currentCard;
     private bool _isAuthenticated;
 
     public bool HasCardInserted => _currentCard != null;

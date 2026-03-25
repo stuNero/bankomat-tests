@@ -7,19 +7,10 @@ public class Card
     public Account Account { get; }
     public bool isAdmin;
 
-    public Card(string cardNumber, string pinCode, Account account)
+    public Card(string cardNumber, Account account)
     {
         CardNumber = cardNumber;
-        PinCode = pinCode;
         Account = account;
-        if (pinCode == "admin")
-        {
-            isAdmin = true;
-        }
-        else
-        {
-            isAdmin = false;
-        }
     }
 
     public bool MatchesPin(string pinCode)

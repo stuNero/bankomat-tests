@@ -81,7 +81,6 @@ public static class ConsoleRunner
         Console.WriteLine("2. Ta ut pengar");
         Console.WriteLine("3. Sätt in pengar");
         Console.WriteLine("4. Mata ut kort");
-        Console.WriteLine("5. Kolla bankomatens balans");
         Console.Write("Val: ");
 
         string? input = Console.ReadLine();
@@ -100,14 +99,6 @@ public static class ConsoleRunner
             case "4":
                 atm.EjectCard();
                 Console.WriteLine("Kortet är utmatat.");
-                break;
-            case "5":
-                if (atm._currentCard!.isAdmin)
-                {
-                    Console.WriteLine(atm.AtmBalance);
-                    Console.ReadKey(true);
-                }
-                else { Console.WriteLine("Du är inte admin lol"); Console.ReadKey(true); }
                 break;
             default:
                 Console.WriteLine("Ogiltigt val.");
