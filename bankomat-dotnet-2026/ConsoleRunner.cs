@@ -86,6 +86,7 @@ public static class ConsoleRunner
         Console.WriteLine("2. Ta ut pengar");
         Console.WriteLine("3. Sätt in pengar");
         Console.WriteLine("4. Mata ut kort");
+        Console.WriteLine("0. Ändra Pin");
         Console.Write("Val: ");
 
         string? input = Console.ReadLine();
@@ -105,6 +106,9 @@ public static class ConsoleRunner
                 atm.EjectCard();
                 Console.WriteLine("Kortet är utmatat.");
                 break;
+            case "0":
+                ChangePinFlow();
+                break;
             default:
                 Console.WriteLine("Ogiltigt val.");
                 break;
@@ -112,7 +116,33 @@ public static class ConsoleRunner
     }
     private static void ChangePinFlow()
     {
-
+        bool success = false;
+        while (!success)
+        {
+            Utils.TryClear();
+            Console.WriteLine("Vänligen mata in ny pinkod: (Fyra Siffor)");
+            Console.Write("> ");
+            string firstInput = Console.ReadLine()!;
+            Console.Write("Bekräfta pin: (Fyra Siffor)");
+            string secondInput = Console.ReadLine()!;
+            if (firstInput != secondInput)
+            {
+                Utils.PrintColor("Ogiltig pinkod", ConsoleColor.DarkRed, paus: false);
+                Console.WriteLine("Vill du mata ut ditt kort?\n ('ja'/'nej'):");
+                string input = Console.ReadLine()!;
+                switch (input.ToLower().Trim())
+                {
+                    case "ja":
+                        atm.EjectCard();
+                        return;
+                    default:
+                        continue;
+                }
+            }
+            success = atm.ActivateCard(firstInput);
+        }
+        Utils.PrintColor("Kort aktiverat.", color: ConsoleColor.DarkGreen);
+        return;
     }
     private static void ActivateCardFlow()
     {
