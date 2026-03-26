@@ -2,7 +2,7 @@ namespace ATM;
 
 public class AtmService
 {
-    private Card? _currentCard;
+    public Card? _currentCard;
     private bool _isAuthenticated;
 
     public bool HasCardInserted => _currentCard != null;
@@ -19,6 +19,20 @@ public class AtmService
     {
         _currentCard = card;
         _isAuthenticated = false;
+    }
+
+    public bool ActivateCard(string pin)
+    {
+        // Om pin är lika med giltig pinkod struktur
+        // Kortets pin blir inmatad pin kod
+        if (int.TryParse(pin, out int correctPin) && pin.Length == 4 && _currentCard != null)
+        {
+            _currentCard.SetPin(pin);
+            _currentCard.isActivated = true;
+            return true;
+        }
+        else
+            return false;
     }
 
     public void EjectCard()

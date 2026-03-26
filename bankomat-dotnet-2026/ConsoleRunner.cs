@@ -4,7 +4,8 @@ using System.Globalization;
 
 public static class ConsoleRunner
 {
-    public static void Run(AtmService atm, Card demoCard)
+    private static readonly AtmService atm = new(11000);
+    public static void Run(Card demoCard)
     {
         bool running = true;
 
@@ -12,15 +13,19 @@ public static class ConsoleRunner
         {
             if (!atm.HasCardInserted)
             {
-                running = ShowWelcomeMenu(atm, demoCard);
+                running = ShowWelcomeMenu(demoCard);
+            }
+            else if (atm._currentCard != null && !atm._currentCard.isActivated)
+            {
+                ActivateCardFlow();
             }
             else if (!atm.IsAuthenticated)
             {
-                ShowPinMenu(atm);
+                ShowPinMenu();
             }
             else
             {
-                ShowMainMenu(atm);
+                ShowMainMenu();
             }
         }
 
@@ -28,7 +33,7 @@ public static class ConsoleRunner
 
     }
 
-    private static bool ShowWelcomeMenu(AtmService atm, Card demoCard)
+    private static bool ShowWelcomeMenu(Card demoCard)
     {
         Console.WriteLine();
         Console.WriteLine("=== BANKOMAT ===");
@@ -53,7 +58,7 @@ public static class ConsoleRunner
         }
     }
 
-    private static void ShowPinMenu(AtmService atm)
+    private static void ShowPinMenu()
     {
         Console.WriteLine();
         Console.Write("Ange PIN: ");
@@ -73,7 +78,7 @@ public static class ConsoleRunner
         }
     }
 
-    private static void ShowMainMenu(AtmService atm)
+    private static void ShowMainMenu()
     {
         Console.WriteLine();
         Console.WriteLine("=== HUVUDMENY ===");
@@ -88,13 +93,13 @@ public static class ConsoleRunner
         switch (input)
         {
             case "1":
-                ShowBalance(atm);
+                ShowBalance();
                 break;
             case "2":
-                WithdrawFlow(atm);
+                WithdrawFlow();
                 break;
             case "3":
-                DepositFlow(atm);
+                DepositFlow();
                 break;
             case "4":
                 atm.EjectCard();
@@ -105,20 +110,54 @@ public static class ConsoleRunner
                 break;
         }
     }
+    private static void ChangePinFlow()
+    {
 
-    private static void ShowBalance(AtmService atm)
+    }
+    private static void ActivateCardFlow()
+    {
+        bool success = false;
+        while (!success)
+        {
+            Utils.TryClear();
+            Console.WriteLine("Ditt kort är ej aktiverat.");
+            Console.WriteLine("Vänligen mata in ny pinkod: (Fyra Siffor)");
+            Console.Write("> ");
+            string input = Console.ReadLine()!;
+            success = atm.ActivateCard(input);
+            if (!success)
+            {
+                Utils.PrintColor("Ogiltig pinkod", ConsoleColor.DarkRed, paus: false);
+                Console.WriteLine("Vill du mata ut ditt kort?\n ('ja'/'nej'):");
+                input = Console.ReadLine()!;
+                switch (input.ToLower().Trim())
+                {
+                    case "ja":
+                        atm.EjectCard();
+                        return;
+                }
+            }
+            else
+            {
+                Utils.PrintColor("Kort aktiverat.", color: ConsoleColor.DarkGreen);
+                return;
+            }
+        }
+    }
+
+    private static void ShowBalance()
     {
         int balance = atm.GetBalance();
         Console.WriteLine($"Ditt saldo är: {balance} kr");
     }
 
-    private static void WithdrawFlow(AtmService atm)
+    private static void WithdrawFlow()
     {
         Console.Write("Ange belopp att ta ut: ");
         string? input = Console.ReadLine();
         if (input == null) // For fixing null reference
         {
-            Utils.PrintError("Du måste ange ett belopp.");
+            Utils.PrintColor("Du måste ange ett belopp.", color: ConsoleColor.DarkRed);
             return;
         }
         int amount = int.Parse(input);
@@ -135,13 +174,13 @@ public static class ConsoleRunner
         }
     }
 
-    private static void DepositFlow(AtmService atm)
+    private static void DepositFlow()
     {
         Console.Write("Ange belopp att sätta in: ");
         string? input = Console.ReadLine();
         if (input == null) // For fixing null reference
         {
-            Utils.PrintError("Du måste ange ett belopp.");
+            Utils.PrintColor("Du måste ange ett belopp.", ConsoleColor.DarkRed);
             return;
         }
         int amount = int.Parse(input);
