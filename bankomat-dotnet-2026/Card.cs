@@ -6,16 +6,13 @@ public class Card
     public string PinCode { get; private set; }
     public Account Account { get; }
     public bool isActivated = false;
-    public bool isAdmin;
+    public CardType CardType;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
-    public Card(string cardNumber, Account account)
+    public Card(string cardNumber, Account account, CardType cardType)
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     {
-        if (!String.IsNullOrWhiteSpace(PinCode))
-        {
-            isActivated = true;
-        }
+        CardType = cardType;
         CardNumber = cardNumber;
         Account = account;
     }
@@ -26,6 +23,7 @@ public class Card
     }
     public void SetPin(string newPin)
     {
+        isActivated = true;
         PinCode = newPin;
     }
 }

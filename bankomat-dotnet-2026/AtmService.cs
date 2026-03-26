@@ -4,21 +4,13 @@ public class AtmService
 {
     public Card? _currentCard;
     private bool _isAuthenticated;
-
     public bool HasCardInserted => _currentCard != null;
     public bool IsAuthenticated => _isAuthenticated;
-
     public int AtmBalance { get; private set; }
 
     public AtmService(int initialBalance)
     {
         AtmBalance = initialBalance;
-    }
-
-    public void InsertCard(Card card)
-    {
-        _currentCard = card;
-        _isAuthenticated = false;
     }
 
     public bool ActivateCard(string pin)
@@ -34,13 +26,6 @@ public class AtmService
         else
             return false;
     }
-
-    public void EjectCard()
-    {
-        _currentCard = null;
-        _isAuthenticated = false;
-    }
-
     public bool EnterPin(string pinCode)
     {
         if (_currentCard == null)
@@ -50,6 +35,17 @@ public class AtmService
 
         _isAuthenticated = _currentCard.MatchesPin(pinCode);
         return _isAuthenticated;
+    }
+
+    public void InsertCard(Card card)
+    {
+        _currentCard = card;
+        _isAuthenticated = false;
+    }
+    public void EjectCard()
+    {
+        _currentCard = null;
+        _isAuthenticated = false;
     }
 
     public int GetBalance()

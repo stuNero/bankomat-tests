@@ -10,6 +10,8 @@ Användaren kan mata in kort, ange PIN-kod, se saldo, ta ut pengar, sätta in pe
 - Visa kontosaldo
 - Uttag och insättning
 - Utmatning av kort och avslut
+- Aktivering av kort
+- Ändring av PIN-kod
 
 ## Hur programmet fungerar
 

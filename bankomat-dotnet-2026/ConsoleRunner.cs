@@ -28,9 +28,7 @@ public static class ConsoleRunner
                 ShowMainMenu();
             }
         }
-
         Console.WriteLine("Tack och hej!");
-
     }
 
     private static bool ShowWelcomeMenu(Card demoCard)
@@ -225,7 +223,5 @@ public static class ConsoleRunner
         {
             Console.WriteLine("Insättningen kunde inte genomföras.");
         }
-
     }
-
 }
