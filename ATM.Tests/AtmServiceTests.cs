@@ -8,9 +8,24 @@ public class AtmServiceTests
   public AtmServiceTests()
   {
     account = new Account(9000);
-    card = new Card("1234-123456", "0123", account);
+    card = new Card("1234-123456", account);
+    card.SetPin("0123");
     AtmService = new AtmService(11000);
   }
+
+  [Theory]
+  // Too long
+  [InlineData("12345")]
+  // Too short
+  [InlineData("123")]
+  // letters
+  [InlineData("abcd")]
+  public void ActivateCard_ShouldFail(string pincode)
+  {
+    bool success = AtmService.ActivateCard(pincode);
+    Assert.False(success);
+  }
+
   [Fact]
   public void InsertCard_Test()
   {
