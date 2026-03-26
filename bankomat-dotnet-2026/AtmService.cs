@@ -12,7 +12,26 @@ public class AtmService
     {
         AtmBalance = initialBalance;
     }
+    public bool IncreaseAtmBalance(int amount)
+    {
+        if (_currentCard != null && _currentCard.CardType != CardType.Admin)
+            return false;
+        EnsureAuthenticated();
+        AtmBalance += amount;
 
+        return true;
+    }
+    public bool DecreaseAtmBalance(int amount)
+    {
+        if (_currentCard != null && _currentCard.CardType != CardType.Admin)
+            return false;
+        EnsureAuthenticated();
+        if (AtmBalance - amount < 0)
+            return false;
+        AtmBalance -= amount;
+
+        return true;
+    }
     public bool ActivateCard(string pin)
     {
         // Om pin är lika med giltig pinkod struktur

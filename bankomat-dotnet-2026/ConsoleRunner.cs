@@ -84,7 +84,9 @@ public static class ConsoleRunner
         Console.WriteLine("2. Ta ut pengar");
         Console.WriteLine("3. Sätt in pengar");
         Console.WriteLine("4. Mata ut kort");
-        Console.WriteLine("0. Ändra Pin");
+        Console.WriteLine("5. Ändra Pin");
+        if (atm._currentCard != null && atm._currentCard.CardType == CardType.Admin)
+            Console.WriteLine("0. Ändra bankomat saldo");
         Console.Write("Val: ");
 
         string? input = Console.ReadLine();
@@ -104,12 +106,32 @@ public static class ConsoleRunner
                 atm.EjectCard();
                 Console.WriteLine("Kortet är utmatat.");
                 break;
-            case "0":
+            case "5":
                 ChangePinFlow();
+                break;
+            case "0":
+                ChangeAtmBalanceFlow();
                 break;
             default:
                 Console.WriteLine("Ogiltigt val.");
                 break;
+        }
+    }
+    private static void ChangeAtmBalanceFlow()
+    {
+        if (atm._currentCard!.CardType == CardType.Admin)
+            return;
+        while (true)
+        {
+            Console.WriteLine("1. Sätt in pengar");
+            Console.WriteLine("2. Ta ut pengar");
+            Console.WriteLine("3. Gå tillbaka");
+            string input = Console.ReadLine()!;
+            switch (input)
+            {
+                case "1":
+                    break;
+            }
         }
     }
     private static void ChangePinFlow()
