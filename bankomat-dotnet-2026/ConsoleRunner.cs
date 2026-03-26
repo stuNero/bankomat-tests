@@ -116,7 +116,11 @@ public static class ConsoleRunner
     {
         Console.Write("Ange belopp att ta ut: ");
         string? input = Console.ReadLine();
-
+        if (input == null) // For fixing null reference
+        {
+            Utils.PrintError("Du måste ange ett belopp.");
+            return;
+        }
         int amount = int.Parse(input);
 
         bool success = atm.Withdraw(amount);
@@ -135,7 +139,11 @@ public static class ConsoleRunner
     {
         Console.Write("Ange belopp att sätta in: ");
         string? input = Console.ReadLine();
-
+        if (input == null) // For fixing null reference
+        {
+            Utils.PrintError("Du måste ange ett belopp.");
+            return;
+        }
         int amount = int.Parse(input);
 
         bool success = atm.Deposit(amount);
