@@ -8,7 +8,7 @@ public class AtmServiceTests
   public AtmServiceTests()
   {
     account = new Account(9000);
-    card = new Card("1234-123456", account);
+    card = new Card("1234-123456", account, CardType.Debit);
     card.SetPin("0123");
     AtmService = new AtmService(11000);
   }
